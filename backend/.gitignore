@@ -3,4 +3,8 @@ __pycache__/
 *.pyc
 db.sqlite3
 .env
-media/
+# uploads are runtime-only, but the clinic logo ships with the repo
+media/*
+!media/clinic/
+media/clinic/*
+!media/clinic/logo.png
