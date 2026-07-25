@@ -226,6 +226,107 @@ body,
   text-align: center;
 }
 
+/* ---- Mobile responsiveness ---- */
+.app-burger {
+  display: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  /* Navbar: burger + brand + actions only */
+  .app-burger {
+    display: inline-flex;
+  }
+  .app-nav-menu {
+    display: none !important;
+  }
+  .app-navbar {
+    gap: 10px;
+    padding-inline: 12px !important;
+  }
+  .app-brand-title {
+    font-size: 14px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .app-navbar-actions {
+    gap: 10px;
+    margin-inline-start: auto;
+  }
+  .app-user-name {
+    display: none;
+  }
+
+  /* Content */
+  .app-content {
+    padding: 12px;
+  }
+
+  /* Hero banner */
+  .hero-banner {
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .hero-banner h1 {
+    font-size: 19px;
+  }
+  .hero-banner p {
+    font-size: 13px;
+  }
+  .hero-banner .hero-icon {
+    font-size: 64px;
+  }
+
+  /* Tiles & cards */
+  .tile {
+    min-height: 84px;
+    padding: 14px 16px;
+  }
+  .tile .tile-value {
+    font-size: 24px;
+  }
+  .tile .tile-icon {
+    font-size: 26px;
+  }
+  .page-title {
+    font-size: 18px;
+  }
+
+  /* Tables: horizontal scroll instead of squashing columns */
+  .ant-table-content {
+    overflow-x: auto !important;
+  }
+  .ant-table-content > table {
+    min-width: 640px;
+  }
+  .ant-card .ant-card-body {
+    padding: 14px;
+  }
+
+  /* Modals nearly full-width */
+  .ant-modal {
+    max-width: calc(100vw - 16px) !important;
+    margin: 8px auto !important;
+  }
+  .ant-modal .ant-modal-content {
+    padding: 16px;
+  }
+
+  /* Tabs: allow horizontal swipe */
+  .ant-tabs-nav {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-brand-title {
+    display: none;
+  }
+}
+
 /* Waiting room connector arrow */
 .wr-arrow { animation: wr-pulse 1.6s ease-in-out infinite; }
 @keyframes wr-pulse {

@@ -1,4 +1,5 @@
-import { Layout, Menu, Avatar, Dropdown, Badge, Popover, List, Tag, Button } from 'antd'
+import { useState } from 'react'
+import { Layout, Menu, Avatar, Dropdown, Badge, Popover, List, Tag, Drawer } from 'antd'
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -14,6 +15,7 @@ import {
   WalletOutlined,
   ContactsOutlined,
   ClockCircleOutlined,
+  MenuOutlined,
 } from '@ant-design/icons'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/store'
@@ -38,7 +40,7 @@ function NotificationsBell() {
       content={
         <List
           size="small"
-          style={{ width: 340, maxHeight: 380, overflowY: 'auto' }}
+          style={{ width: 340, maxWidth: 'calc(100vw - 48px)', maxHeight: 380, overflowY: 'auto' }}
           dataSource={data?.alerts || []}
           locale={{ emptyText: t('no_alerts') }}
           renderItem={(a) => (
@@ -66,6 +68,7 @@ export default function AppLayout() {
   const user = useAppSelector((s) => s.auth.user)
   const { lang, setLang, t } = useLang()
   const { data: settings } = useGetClinicSettingsQuery()
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const isAdmin = user?.role === 'admin'
   const isReception = user?.role === 'receptionist'
@@ -94,6 +97,11 @@ export default function AppLayout() {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header className="app-navbar">
+        {/* Mobile hamburger */}
+        <span className="app-burger" onClick={() => setDrawerOpen(true)}>
+          <MenuOutlined style={{ fontSize: 20, color: '#fff' }} />
+        </span>
+
         <div className="app-brand" onClick={() => navigate('/')}>
           <div className="app-brand-mark">
             {settings?.logo_url ? (
@@ -133,11 +141,41 @@ export default function AppLayout() {
           >
             <span style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8, color: '#fff' }}>
               <Avatar size="small" style={{ background: 'rgba(255,255,255,0.2)' }} icon={<UserOutlined />} />
-              <span style={{ fontSize: 13, fontWeight: 600 }}>{user?.full_name}</span>
+              <span className="app-user-name" style={{ fontSize: 13, fontWeight: 600 }}>{user?.full_name}</span>
             </span>
           </Dropdown>
         </div>
       </Header>
+
+      {/* Mobile nav drawer */}
+      <Drawer
+        title={
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            {settings?.logo_url ? (
+              <img src={settings.logo_url} alt="logo" style={{ width: 28, height: 28, objectFit: 'contain', borderRadius: 6 }} />
+            ) : (
+              <ClinicLogo size={24} color="#2563eb" />
+            )}
+            {settings?.clinic_name || t('app_name')}
+          </span>
+        }
+        placement={lang === 'ar' ? 'right' : 'left'}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        width={280}
+        styles={{ body: { padding: 0 } }}
+      >
+        <Menu
+          mode="inline"
+          selectedKeys={[selectedKey]}
+          items={items}
+          onClick={({ key }) => {
+            navigate(key)
+            setDrawerOpen(false)
+          }}
+          style={{ borderInlineEnd: 'none' }}
+        />
+      </Drawer>
 
       <Content>
         <div className="app-content">
