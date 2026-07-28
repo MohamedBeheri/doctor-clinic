@@ -180,6 +180,19 @@ export default function AppLayout() {
       <Content>
         <div className="app-content">
           <Outlet />
+          <div style={{ textAlign: 'center', padding: '24px 0 8px', marginTop: 16 }}>
+            <span style={{ fontSize: 12, color: '#94a3b8' }}>
+              تصميم وتطوير بواسطة{' '}
+              <a
+                href="https://kaffo.co"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#d97706', fontWeight: 700, textDecoration: 'none' }}
+              >
+                شركة كفو — Kaffo.co
+              </a>
+            </span>
+          </div>
         </div>
       </Content>
     </Layout>

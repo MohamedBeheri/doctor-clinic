@@ -9,6 +9,7 @@ import 'antd/dist/reset.css'
 import App from './App'
 import { store } from './app/store'
 import { LanguageProvider, useLang } from './i18n'
+import SplashScreen from './components/SplashScreen'
 import './index.css'
 
 const FONT = "'Cairo', 'Inter', 'Segoe UI', Tahoma, sans-serif"
@@ -79,6 +80,7 @@ function ThemedApp() {
       }}
     >
       <AntdApp>
+        <SplashScreen />
         <BrowserRouter>
           <App />
         </BrowserRouter>
