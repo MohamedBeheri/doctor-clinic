@@ -1,5 +1,8 @@
 import hashlib
+import os
+import tempfile
 
+from django.core.cache.backends.filebased import FileBasedCache
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
@@ -21,6 +24,8 @@ class LoginThrottle(SimpleRateThrottle):
     everyone out together."""
     scope = 'login'
     rate = '10/min'
+    # one count for all the server's workers — each keeps its own memory cache
+    cache = FileBasedCache(os.path.join(tempfile.gettempdir(), 'doctor-login-throttle'), {})
 
     def get_cache_key(self, request, view):
         account = str(request.data.get('username') or '').strip().lower()
